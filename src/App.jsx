@@ -14,7 +14,7 @@ function App() {
   };
   return (
     <div className="App">
-      <h1>Editando texto com Context API</h1>
+      <h1>Editando texto com Context API - Custom Hooks*</h1>
       <h3 style={textStyle} className="text">{textData.state.text}</h3>
       <div className="forms-container">
         <FormCorTexto />

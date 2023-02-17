@@ -1,35 +1,25 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import TextContext from "../context/TextContext";
+import useTextData from "../hooks/useTextData";
 
 function FormCorFundo() {
-  const { state, setState } = useContext(TextContext);
+  const { state } = useContext(TextContext);
+  const propertyName = "background";
 
-  const [background, setBackground] = useState(state.background);
-
-  const handleChange = ({ target: { value } }) => {
-    setBackground(value);
-  };
-
-  const handleClick = () => {
-    setState({
-      ...state,
-      background,
-    });
-    setBackground("");
-  };
+  const background = useTextData(state[propertyName], propertyName);
 
   return (
     <form action="" className="FormCorFundo defaultForm">
-      <h4>Mudar cor do Fundo</h4>
+      <h4>Mudar cor do Fundo({state[propertyName]})</h4>
       <label htmlFor="input-background">
         <input
           type="text"
           id="input-background"
-          onChange={handleChange}
-          value={background}
+          onChange={background.handleChange}
+          value={background.value}
         />
       </label>
-      <button type="button" onClick={handleClick}>
+      <button type="button" onClick={background.handleClick}>
         Alterar
       </button>
     </form>

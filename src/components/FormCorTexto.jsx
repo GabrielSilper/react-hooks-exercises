@@ -1,29 +1,27 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import TextContext from "../context/TextContext";
+import useTextData from "../hooks/useTextData";
 
 function FormCorTexto() {
-  const textData = useContext(TextContext);
+  const { state } = useContext(TextContext);
+  const propertyName = "color";
 
-  const [color, setColor] = useState("");
-
-  const handleChange = ({ target: { value } }) => {
-    setColor(value);
-  };
+  const color = useTextData(state[propertyName], propertyName);
 
   const handleClick = () => {
-    textData.changeTextColor(color);
-    setColor("");
+    color.updateChange();
+    color.clear();
   };
 
   return (
     <form action="" className="FormCorTexto defaultForm">
-      <h4>Mudar cor do Texto</h4>
+      <h4>Mudar cor do Texto para ({state[propertyName]})</h4>
       <label htmlFor="input-color">
         <input
           type="text"
           id="input-color"
-          value={color}
-          onChange={handleChange}
+          onChange={color.handleChange}
+          value={color.value}
         />
       </label>
       <button type="button" onClick={handleClick}>

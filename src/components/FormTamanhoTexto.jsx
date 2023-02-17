@@ -1,32 +1,27 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import TextContext from "../context/TextContext";
+import useTextData from "../hooks/useTextData";
 
 function FormTamanhoTexto() {
-  const { state, setState } = useContext(TextContext);
+  const { state } = useContext(TextContext);
+  const propertyName = "size";
 
-  const [size, setSize] = useState(state.size);
+  const size = useTextData(state[propertyName], propertyName);
 
   const handleClick = () => {
-    setState({
-      ...state,
-      size,
-    });
-    setSize("");
-  };
-
-  const handleChange = ({ target: { value } }) => {
-    setSize(value);
+    size.updateChange();
+    size.clear();
   };
 
   return (
     <form action="" className="FormTamanhoTexto defaultForm">
-      <h4>Mudar tamanho do Texto</h4>
+      <h4>Mudar tamanho do Texto({state[propertyName]})</h4>
       <label htmlFor="input-text-size">
         <input
           type="text"
           id="input-text-size"
-          onChange={handleChange}
-          value={size}
+          onChange={size.handleChange}
+          value={size.value}
         />
       </label>
       <button type="button" onClick={handleClick}>
